@@ -1,4 +1,19 @@
 ---
+
+# Find an IP address on the memcached network 
+# (This magic came from http://docs.ansible.com/ansible/latest/playbooks_filters_ipaddr.html)
+- set_fact:
+    memcached_listen_ip: "{{ item }}"
+  when: item | ipaddr(memcached_network_cidr)
+  with_items: "{{ ansible_all_ipv4_addresses }}"
+
+- debug:
+    var: memcached_network_cidr
+- debug:
+    var: memcached_listen_ip
+
+# TODO: fail if no interface found, or just silently use localhost (default value for memcached_listen_ip)?
+
 # Include variables and define needed variables.
 - name: Include OS-specific variables.
   include_vars: "{{ ansible_os_family }}.yml"
