@@ -32,6 +32,9 @@
   package: name=memcached state=installed
   register: memcached_install
 
+- name: Install Memcached Tools (allows monitoring memcached with memcstat).
+  package: name=libmemcached-tools state=installed
+
 # Configure Memcached.
 - name: Copy Memcached configuration.
   template:
